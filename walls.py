@@ -8,11 +8,14 @@ class WallsGameWindow(arcade.Window):
         super().__init__(width, height)
  
         arcade.set_background_color(arcade.color.BLACK)
- 
+
+        self.dot = arcade.Sprite('images/full-circle.png')
+        self.dot.set_position(100, 100)
  
     def on_draw(self):
         arcade.start_render()
- 
+
+        self.dot.draw()
 
 if __name__ == '__main__':
     window = WallsGameWindow(SCREEN_WIDTH, SCREEN_HEIGHT)
