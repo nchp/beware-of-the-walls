@@ -17,53 +17,40 @@ class World:
         self.height = height
  
         self.dot = Dot(self, 100, 100)
-#        self.gold = Gold(self, 400, 400)
 
         self.score = 0
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        """
+        Called whenever the mouse moves.
+        """
+        self.dot.x = x
+        self.dot.y = 200
  
     def update(self, delta):
         self.dot.update(delta)
  
-"""        if self.dot.hit(self.gold, 10):
-            self.gold.random_location()
-            self.score += 1
-
-    def on_key_press(self, key, key_modifiers):
-        if key == arcade.key.SPACE:
-            self.dot.switch_direction()
-"""
-
 class Dot(Model):
-    DIR_HORIZONTAL = 0
-    DIR_VERTICAL = 1
  
     def __init__(self, world, x, y):
         super().__init__(world, x, y, 0)
-        self.direction = Dot.DIR_VERTICAL
- 
-    def switch_direction(self):
-        if self.direction == Dot.DIR_HORIZONTAL:
-            self.direction = Dot.DIR_VERTICAL
-            self.angle = 0
-        else:
-            self.direction = Dot.DIR_HORIZONTAL
-            self.angle = -90
- 
+  
     def update(self, delta):
-        if self.direction == Dot.DIR_VERTICAL:
-            if self.y > self.world.height:
-                self.y = 0
-            self.y += 5
-        else:
-            if self.x > self.world.width:
-                self.x = 0
-            self.x += 5
+        self.wait_time += delta
+ 
+        if self.wait_time < Dot.MOVE_WAIT:
+            return
 
-"""class Gold(Model):
-    def __init__(self, world, x, y):
-        super().__init__(world, x, y, 0)
+        if self.x > self.world.width:
+            self.x = 0
+        if self.x < 0:
+            self.x = self.world.width
+        if self.y > self.world.height:
+            self.y = 0
+        if self.y < 0:
+            self.y = self.world.height
 
-    def random_location(self):
-        self.x = randint(0, self.world.width - 1)
-        self.y = randint(0, self.world.height - 1)
-"""
+        self.x += DIR_OFFSET[self.direction][0]
+        self.y += DIR_OFFSET[self.direction][1]
+ 
+        self.wait_time = 0

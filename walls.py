@@ -28,23 +28,22 @@ class WallsWindow(arcade.Window):
 
         self.world = World(width, height)
         self.dot_sprite = ModelSprite('images/full-circle.png',model=self.world.dot)
-#        self.gold_sprite = ModelSprite('images/gold.png',model=self.world.gold)
     
     def on_draw(self):
         arcade.start_render()
-#        self.gold_sprite.draw()
         self.dot_sprite.draw()   
 
         arcade.draw_text(str(self.world.score),
                          self.width - 30, self.height - 30,
                          arcade.color.WHITE, 20)
 
-    def update(self, delta):
-        self.world.update(delta)
-#        self.ship_sprite.set_position(self.world.ship.x, self.world.ship.y)
+#    def update(self, delta):
+#        self.world.update(delta)
+#        self.dot_sprite.set_position(self.world.ship.x, self.world.ship.y)
 
-#    def on_key_press(self, key, key_modifiers):
-#       self.world.on_key_press(key, key_modifiers)
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        self.world.on_mouse_motion(x, y, dx, dy)
 
 if __name__ == '__main__':
     window = WallsWindow(SCREEN_WIDTH, SCREEN_HEIGHT)
