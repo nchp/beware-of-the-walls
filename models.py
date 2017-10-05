@@ -16,8 +16,8 @@ class World:
         self.width = width
         self.height = height
  
-        self.dot = Dot(self, 300, 150)
-        self.block_1 = Block_1(self, 300, 300)
+        self.dot = Dot(self, 200, 150)
+        self.block_1 = Block_1(self, 200, 300)
 
         self.score = 0
 
