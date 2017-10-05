@@ -16,25 +16,23 @@ class World:
         self.width = width
         self.height = height
  
-        self.dot = Dot(self, 100, 100)
+        self.dot = Dot(self, 300, 150)
+        self.block_1 = Block_1(self, 300, 300)
 
         self.score = 0
 
     def on_mouse_motion(self, x, y, dx, dy):
-        """
-        Called whenever the mouse moves.
-        """
         self.dot.x = x
-        self.dot.y = 200
+        self.dot.y = 150
  
     def update(self, delta):
-        self.dot.update(delta)
+        self.block_1.update(delta)
  
 class Dot(Model):
  
     def __init__(self, world, x, y):
         super().__init__(world, x, y, 0)
-  
+"""  
     def update(self, delta):
         self.wait_time += delta
  
@@ -54,3 +52,10 @@ class Dot(Model):
         self.y += DIR_OFFSET[self.direction][1]
  
         self.wait_time = 0
+"""
+class Block_1(Model):
+    def __init__(self, world, x, y):
+        super().__init__(world, x, y, 0)
+
+    def update(self, delta):
+        self.y -= 2
