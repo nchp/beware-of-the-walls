@@ -1,9 +1,12 @@
 import arcade
 
-from models import Dot, World
- 
+from models import Dot, World, Block
+
 SCREEN_WIDTH = 420
 SCREEN_HEIGHT = 600
+
+RECT_WIDTH = 70
+RECT_HEIGHT = 100
 
 INITIAL_PAGE = 0
 GAME_RUNNING = 1
