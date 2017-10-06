@@ -1,6 +1,6 @@
 import arcade
 
-from models import Dot, World, Block
+from models import Dot, World, Block, Walls
 
 SCREEN_WIDTH = 420
 SCREEN_HEIGHT = 600
