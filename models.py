@@ -16,8 +16,8 @@ class World:
         self.width = width
         self.height = height
  
-        self.dot = Dot(self, 200, 150)
-        self.block_1 = Block_1(self, 200, 150)
+        self.dot = Dot(self, 210, 150)
+        self.block = Block(self, 210, 150)
 
         self.score = 0
 
@@ -26,14 +26,14 @@ class World:
         self.dot.y = 150
  
     def update(self, delta):
-        self.block_1.update(delta)
+        self.block.update(delta)
  
 class Dot(Model):
  
     def __init__(self, world, x, y):
         super().__init__(world, x, y, 0)
 
-class Block_1(Model):
+class Block(Model):
     def __init__(self, world, x, y):
         super().__init__(world, x, y, 0)
 
