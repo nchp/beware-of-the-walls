@@ -1,17 +1,16 @@
 import arcade
-
+import random
 from models import Dot, World, Block, Walls
 
 SCREEN_WIDTH = 420
-SCREEN_HEIGHT = 600
-
-RECT_WIDTH = 70
-RECT_HEIGHT = 100
+SCREEN_HEIGHT = 700
 
 INITIAL_PAGE = 0
 GAME_RUNNING = 1
 GAME_OVER = 2
  
+WALLS_X_POSITION = (30,90,150,210,270,330,390)
+
 class ModelSprite(arcade.Sprite):
     def __init__(self, *args, **kwargs):
         self.model = kwargs.pop('model', None)
@@ -38,20 +37,38 @@ class WallsWindow(arcade.Window):
 
         self.world = World(width, height)
         self.dot_sprite = ModelSprite('images/full-circle.png',model=self.world.dot)
-        self.block_sprite = ModelSprite('images/block.png',model=self.world.block)
+#        self.block_sprite = ModelSprite('images/block.png',model=self.world.block)
+#        self.walls_sprite = ModelSprite('images/walls.png')
+        
+        self.walls_list = arcade.SpriteList()
+
+        for i in range(3):
+            for j in range(3):
+                for k in range(i+1):
+                    self.walls = arcade.Sprite("images/walls.png")
+                    self.walls.center_x = WALLS_X_POSITION[k]
+                    self.walls.center_y = ((i+j+3)*100)-50
+                    self.walls_list.append(self.walls)
+                for l in range(i+1):
+                    self.walls = arcade.Sprite("images/walls.png")
+                    self.walls.center_x = WALLS_X_POSITION[6-l]
+                    self.walls.center_y = ((i+j+3)*100)-50
+                    self.walls_list.append(self.walls)
 
     def draw_initial_page(self):
-        self.block_sprite.draw()
+#        self.block_sprite.draw()
+        self.walls_list.draw()
         self.dot_sprite.draw()
 
         arcade.draw_text("Click the dot to start playing.",
                         50, self.height - 50,
-                         arcade.color.WHITE, 20)      
+                        arcade.color.WHITE, 20)      
 
     def draw_game(self):
         self.set_mouse_visible(False)
-        self.block_sprite.draw()
-        self.dot_sprite.draw()   
+#        self.block_sprite.draw()
+        self.walls_list.draw()
+        self.dot_sprite.draw() 
 
         minutes = int(self.total_time) // 60
         seconds = int(self.total_time) % 60
@@ -84,9 +101,11 @@ class WallsWindow(arcade.Window):
     def update(self, delta):
         if self.current_state == GAME_RUNNING:
             self.world.update(delta)
-            self.block_sprite.set_position(self.world.block.x, self.world.block.y)
+#            self.block_sprite.set_position(self.world.block.x, self.world.block.y)
 
-            self.total_time += delta
+        
+
+        self.total_time += delta
 
     def on_mouse_press(self, x, y, button, modifiers):
         if self.current_state == INITIAL_PAGE:

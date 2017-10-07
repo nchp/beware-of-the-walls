@@ -16,12 +16,13 @@ class World:
         self.width = width
         self.height = height
  
-        self.dot = Dot(self, 210, 100)
+        self.dot = Dot(self, 210, 150)
         self.block = Block(self, 210, 150)
+#        self.walls = Walls(self, x, y)
 
     def on_mouse_motion(self, x, y, dx, dy):
         self.dot.x = x
-        self.dot.y = 100
+        self.dot.y = 150
  
     def update(self, delta):
         self.block.update(delta)
@@ -40,15 +41,6 @@ class Block(Model):
 class Walls(Model):
     def __init__(self, world, x, y):
         super().__init__(world, x, y, 0)
-
-        self.width = width
-        self.height = height
-
-        self.color = color
-
-    def draw(self):
-        arcade.draw_rectangle_filled(self.x, self.y, self.width, self.height,
-                                     self.color, self.angle)
 
     def update(self, delta):
         self.y -= 2
