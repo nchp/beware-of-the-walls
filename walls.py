@@ -1,6 +1,6 @@
 import arcade
 import random
-from models import Dot, World, Block, Walls
+from models import Dot, World
 
 SCREEN_WIDTH = 420
 SCREEN_HEIGHT = 700
@@ -57,7 +57,6 @@ class WallsWindow(arcade.Window):
                     self.init_walls_list.append(self.walls)
 
     def draw_initial_page(self):
-#        self.block_sprite.draw()
         self.init_walls_list.draw()
         self.dot_sprite.draw()
 
@@ -70,7 +69,6 @@ class WallsWindow(arcade.Window):
 #        self.block_sprite.draw()
         self.init_walls_list.draw()
         self.dot_sprite.draw()
-        #self.dot_sprite.center_x = 300
 
         minutes = int(self.total_time) // 60
         seconds = int(self.total_time) % 60
@@ -107,7 +105,6 @@ class WallsWindow(arcade.Window):
 
     def update(self, delta):
         if self.current_state == GAME_RUNNING:
-            self.world.update(delta)
 #            self.block_sprite.set_position(self.world.block.x, self.world.block.y)
 
             for self.walls in self.init_walls_list:

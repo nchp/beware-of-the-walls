@@ -8,8 +8,8 @@ class Model:
         self.y = y
         self.angle = 0
 
-#    def hit(self, other, hit_size):
-#        return (abs(self.x - other.x) <= hit_size) and (abs(self.y - other.y) <= hit_size)
+    def hit(self, other, hit_size):
+        return (abs(self.x - other.x) <= hit_size) and (abs(self.y - other.y) <= hit_size)
 
 class World:
     def __init__(self, width, height):
