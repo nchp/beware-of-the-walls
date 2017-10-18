@@ -9,7 +9,7 @@ INITIAL_PAGE = 0
 GAME_RUNNING = 1
 GAME_OVER = 2
 
-WALLS_X_POSITION = (30,90,150,210,270,330,390)
+X_POSITION = (30,90,150,210,270,330,390)
 
 class Walls(arcade.Sprite):
     def __init__(self, images, x, y):
@@ -36,20 +36,38 @@ class WallsWindow(arcade.Window):
         self.current_state = INITIAL_PAGE
 
         self.timer_text = None
-        self.init_wall_list = arcade.SpriteList()
-        self.wall_list = arcade.SpriteList()
         self.total_time = 0.0
 
         self.dot_sprite = arcade.Sprite("images/full-circle.png")
         self.dot_sprite.center_x = 210
         self.dot_sprite.center_y = 150
 
+        self.init_wall_list = arcade.SpriteList()
         for i in range(3):
             for j in range(3):
                 for k in range(i+1):
                     self.make_wall(WALLS_X_POSITION[k], ((i+j+3)*100)-50, self.init_wall_list)
                 for l in range(i+1):
                     self.make_wall(WALLS_X_POSITION[6-l], ((i+j+3)*100)-50, self.init_wall_list)
+
+        self.wall_row = arcade.SpriteList()
+        self.beg_road = random.randrange(1,5)
+        self.last_road = random.randrange(1,5)
+        for i in range(7):
+            if i == self.beg_road:
+                continue
+            self.wall = Walls('images/walls.png', X_POSITION[i], SCREEN_HEIGHT+50)
+            self.wall_row.append(self.wall)
+        for i in range(7):
+            if (i>=self.beg_road and i<=self.last_road) or (i>=self.last_road and i<=self.beg_road):
+                continue
+            self.wall = Walls('images/walls.png', X_POSITION[i], SCREEN_HEIGHT+150)
+            self.wall_row.append(self.wall)
+        for i in range(7):
+            if i == self.last_road:
+                continue
+            self.wall = Walls('images/walls.png', X_POSITION[i], SCREEN_HEIGHT+250)
+            self.wall_row.append(self.wall)
 
         self.set_mouse_visible(True)
 
