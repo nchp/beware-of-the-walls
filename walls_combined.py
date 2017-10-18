@@ -11,6 +11,18 @@ GAME_OVER = 2
 
 WALLS_X_POSITION = (30,90,150,210,270,330,390)
 
+class Walls(arcade.Sprite):
+    def __init__(self, images, x, y):
+        super().__init__(images)
+        self.center_x = x
+        self.center_y = y
+        self.speed = 3
+
+    def update(self):
+        self.center_y -= self.speed
+        if self.top < 0:
+            self.kill()
+
 class WallsWindow(arcade.Window):
     def make_wall(self, x, y, wall_list):
         self.walls = arcade.Sprite("images/walls.png")
