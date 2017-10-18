@@ -46,9 +46,11 @@ class WallsWindow(arcade.Window):
         for i in range(3):
             for j in range(3):
                 for k in range(i+1):
-                    self.make_wall(WALLS_X_POSITION[k], ((i+j+3)*100)-50, self.init_wall_list)
+                    self.wall = Walls('images/walls.png', X_POSITION[k], ((i+j+3)*100)-50)
+                    self.init_wall_list.append(self.wall)
                 for l in range(i+1):
-                    self.make_wall(WALLS_X_POSITION[6-l], ((i+j+3)*100)-50, self.init_wall_list)
+                    self.wall = Walls('images/walls.png', X_POSITION[6-l], ((i+j+3)*100)-50)
+                    self.init_wall_list.append(self.wall)
 
         self.wall_row = arcade.SpriteList()
         self.beg_road = random.randrange(1,5)
