@@ -24,11 +24,6 @@ class Walls(arcade.Sprite):
             self.kill()
 
 class WallsWindow(arcade.Window):
-    def make_wall(self, x, y, wall_list):
-        self.walls = arcade.Sprite("images/walls.png")
-        self.walls.center_x = x
-        self.walls.center_y = y
-        wall_list.append(self.walls)
 
     def __init__(self, screen_width, screen_height):
         super().__init__(screen_width, screen_height)
@@ -53,7 +48,7 @@ class WallsWindow(arcade.Window):
                     self.init_wall_list.append(self.wall)
 
         self.wall_row = arcade.SpriteList()
-        self.beg_road = random.randrange(1,5)
+        self.beg_road = 3
         self.last_road = random.randrange(1,5)
         for i in range(7):
             if i == self.beg_road:
@@ -78,12 +73,12 @@ class WallsWindow(arcade.Window):
         self.init_wall_list.draw()
         arcade.draw_text("Click the dot to start playing.",
                         50, self.height - 50,
-                        arcade.color.WHITE, 20)      
+                        arcade.color.WHITE, 20)
 
     def draw_game(self):
         self.set_mouse_visible(False)
         self.init_wall_list.draw()
-
+        self.wall_row.draw()
         self.dot_sprite.draw()
 
         minutes = int(self.total_time) // 60
@@ -127,17 +122,27 @@ class WallsWindow(arcade.Window):
 
     def update(self, delta):
         if self.current_state == GAME_RUNNING:
-            for self.walls in self.init_wall_list:
-                self.walls.center_y -= 2
-                if self.walls.top < 0:
-                    self.walls.kill()
+            self.init_wall_list.update()
+            self.wall_row.update()
+            if self.wall.center_y <= 652:
+                self.beg_road = self.last_road
+                self.last_road = random.randrange(1,5)
+                for i in range(7):
+                    if (i>=self.beg_road and i<=self.last_road) or (i>=self.last_road and i<=self.beg_road):
+                        continue
+                    self.wall = Walls('images/walls.png', X_POSITION[i], SCREEN_HEIGHT+50)
+                    self.wall_row.append(self.wall)
+                for i in range(7):
+                    if i == self.last_road:
+                        continue
+                    self.wall = Walls('images/walls.png', X_POSITION[i], SCREEN_HEIGHT+150)
+                    self.wall_row.append(self.wall)
+            
+            if len(self.init_wall_list) > 0:
                 if arcade.check_for_collision_with_list(self.dot_sprite,self.init_wall_list):
                     self.current_state = GAME_OVER
 
-            self.make_wall(210,800,self.wall_list)
-            
-
-            if arcade.check_for_collision_with_list(self.dot_sprite,self.wall_list):
+            if arcade.check_for_collision_with_list(self.dot_sprite,self.wall_row):
                 self.current_state = GAME_OVER
                 
             self.total_time += delta
