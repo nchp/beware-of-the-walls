@@ -24,18 +24,19 @@ class Walls(arcade.Sprite):
             self.kill()
 
 class WallsWindow(arcade.Window):
-
     def __init__(self, screen_width, screen_height):
         super().__init__(screen_width, screen_height)
-        arcade.set_background_color(arcade.color.ALABAMA_CRIMSON)
+        arcade.set_background_color(arcade.color.BITTERSWEET_SHIMMER)
+        #arcade.set_background_color([random.randrange(255),random.randrange(255),random.randrange(255)])
         self.current_state = INITIAL_PAGE
 
         self.timer_text = None
         self.total_time = 0.0
+        self.score = 0.0
 
         self.dot_sprite = arcade.Sprite("images/full-circle.png")
         self.dot_sprite.center_x = 210
-        self.dot_sprite.center_y = 150
+        self.dot_sprite.center_y = 180
 
         self.init_wall_list = arcade.SpriteList()
         for i in range(3):
@@ -80,18 +81,21 @@ class WallsWindow(arcade.Window):
         self.init_wall_list.draw()
         self.wall_row.draw()
         self.dot_sprite.draw()
-
+        """
         minutes = int(self.total_time) // 60
         seconds = int(self.total_time) % 60
-        output = f"{minutes:02d}:{seconds:02d}"
-        if not self.timer_text or self.timer_text.text != output:
-            self.timer_text = arcade.create_text(output, arcade.color.WHITE, 20)
+        output_t = f"{minutes:02d}:{seconds:02d}"
+        if not self.timer_text or self.timer_text.text != output_t:
+            self.timer_text = arcade.create_text(output_t, arcade.color.WHITE, 20)
         arcade.render_text(self.timer_text, self.width - 80, self.height - 40)
+        """
+        output = "{}".format(int(self.score))
+        arcade.draw_text(output, self.width - 40, self.height - 40, arcade.color.WHITE, 20)
 
     def draw_game_over(self):
         self.set_mouse_visible(True)
-        output = "Game Over"
-        arcade.draw_text(output, 150, 400, arcade.color.WHITE, 24)
+        output = "GAME OVER."
+        arcade.draw_text(output, 130, 400, arcade.color.WHITE, 24)
         """
         output = "Click to restart"
         arcade.draw_text(output, 110, 300, arcade.color.WHITE, 24)    
@@ -118,7 +122,7 @@ class WallsWindow(arcade.Window):
     def on_mouse_motion(self, x, y, dx, dy):
         if self.current_state == GAME_RUNNING:
             self.dot_sprite.center_x = x
-            self.dot_sprite.center_y = 150
+            self.dot_sprite.center_y = 180
 
     def update(self, delta):
         if self.current_state == GAME_RUNNING:
@@ -146,6 +150,7 @@ class WallsWindow(arcade.Window):
                 self.current_state = GAME_OVER
                 
             self.total_time += delta
+            self.score += 0.1
 
 if __name__ == '__main__':
     window = WallsWindow(SCREEN_WIDTH, SCREEN_HEIGHT)
