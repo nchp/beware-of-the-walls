@@ -16,7 +16,7 @@ class Walls(arcade.Sprite):
         super().__init__(images)
         self.center_x = x
         self.center_y = y
-        self.speed = 3
+        self.speed = 4
 
     def update(self):
         self.center_y -= self.speed
@@ -37,6 +37,12 @@ class WallsWindow(arcade.Window):
         self.dot_sprite = arcade.Sprite("images/full-circle.png")
         self.dot_sprite.center_x = 210
         self.dot_sprite.center_y = 180
+        
+        """
+        self.score_board = arcade.Sprite("images/score_board.png")
+        self.score_board.center_x = 210
+        self.score_board.center_y = SCREEN_HEIGHT - 50
+        """
 
         self.init_wall_list = arcade.SpriteList()
         for i in range(3):
@@ -80,6 +86,7 @@ class WallsWindow(arcade.Window):
         self.set_mouse_visible(False)
         self.init_wall_list.draw()
         self.wall_row.draw()
+#        self.score_board.draw()
         self.dot_sprite.draw()
         """
         minutes = int(self.total_time) // 60
@@ -100,6 +107,8 @@ class WallsWindow(arcade.Window):
         output = "Click to restart"
         arcade.draw_text(output, 110, 300, arcade.color.WHITE, 24)    
         """
+        output = "Score: {}".format(int(self.score))
+        arcade.draw_text(output, 153, 350, arcade.color.WHITE, 24)
 
     def on_draw(self):
         arcade.start_render()
@@ -150,7 +159,7 @@ class WallsWindow(arcade.Window):
                 self.current_state = GAME_OVER
                 
             self.total_time += delta
-            self.score += 0.1
+            self.score += 0.15
 
 if __name__ == '__main__':
     window = WallsWindow(SCREEN_WIDTH, SCREEN_HEIGHT)
