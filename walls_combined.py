@@ -16,7 +16,7 @@ class Walls(arcade.Sprite):
         super().__init__(images)
         self.center_x = x
         self.center_y = y
-        self.speed = 4
+        self.speed = 5
 
     def update(self):
         self.center_y -= self.speed
@@ -48,9 +48,11 @@ class WallsWindow(arcade.Window):
         for i in range(3):
             for j in range(3):
                 for k in range(i+1):
+                    print(i, j, k)
                     self.wall = Walls('images/walls.png', X_POSITION[k], ((i+j+3)*100)-50)
                     self.init_wall_list.append(self.wall)
                 for l in range(i+1):
+                    print(i, j, 6-l)
                     self.wall = Walls('images/walls.png', X_POSITION[6-l], ((i+j+3)*100)-50)
                     self.init_wall_list.append(self.wall)
 
@@ -134,6 +136,7 @@ class WallsWindow(arcade.Window):
             self.dot_sprite.center_y = 180
 
     def update(self, delta):
+        
         if self.current_state == GAME_RUNNING:
             self.init_wall_list.update()
             self.wall_row.update()
